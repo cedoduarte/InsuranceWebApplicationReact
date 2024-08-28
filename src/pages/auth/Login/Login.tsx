@@ -3,7 +3,7 @@ import "./Login.css";
 import { useState } from "react";
 import { useAuthentication } from "../../../hooks/useAuthentication";
 import { IUserAuthenticationResult } from "../../../shared/interfaces";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 export function Login() {
     const navigate = useNavigate();
@@ -37,6 +37,10 @@ export function Login() {
         setPassword(event.target.value);
     }
 
+    function handleGoSignUpClick() {
+        navigate("/signup");
+    }
+
     return (
         <>
             <form className="login-form" onSubmit={handleSubmit}>
@@ -53,7 +57,7 @@ export function Login() {
                     <input name="password" type="password" className="form-control" placeholder="Password" onChange={handlePasswordChange} />
                 </div>
                 <button type="submit" className="login-button btn btn-primary">Login</button>
-                <div className="login-go-signup">Sign Up</div>
+                <div className="login-go-signup" onClick={handleGoSignUpClick}>Sign Up</div>
             </form>
         </>
     );

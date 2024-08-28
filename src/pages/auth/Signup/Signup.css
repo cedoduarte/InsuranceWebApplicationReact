@@ -1,0 +1,35 @@
+.signup-form {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.signup-button {
+    margin-top: 10px;
+}
+
+.signup-go-login {
+    cursor: pointer;
+    color: #0aadc9;
+    margin-top: 50px;
+}
+
+.signup-go-login:hover {
+    color: red;
+    text-decoration: underline;
+}
+
+@media only screen and (min-width: 768px) {
+    .signup-form {
+        width: 45vw;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .signup-form {
+        width: 20vw;
+    }
+}
