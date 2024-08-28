@@ -3,21 +3,26 @@ import "./Login.css";
 import { useState } from "react";
 import { useAuthentication } from "../../../hooks/useAuthentication";
 import { IUserAuthenticationResult } from "../../../shared/interfaces";
+import { toast } from 'react-toastify';
 
 export function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const { authenticate } = useAuthentication(onAuthenticated, onAuthenticatedError);
 
-    const { authenticate } = useAuthentication((result: IUserAuthenticationResult) => {
+    function onAuthenticated(result: IUserAuthenticationResult) {
         if (result!.isAuthenticated) {
             localStorage.setItem("authenticatedUser", JSON.stringify(result!.authenticatedUser));
             navigate("/home");
         } else {
-            //this.toaster.critical("Invalid credentials");
-            console.log("invalid credentials");
+            toast.error(result.errorMessage);
         }
-    });
+    }
+
+    function onAuthenticatedError(error: any) {
+        toast.error(error.message);
+    }
 
     async function handleSubmit(event: any) {
         event.preventDefault();

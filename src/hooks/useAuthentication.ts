@@ -1,26 +1,29 @@
 import { BASE_API_URL, HEADERS } from "../shared/constants";
 import { IAuthenticateUserCommand, IUserAuthenticationResult } from "../shared/interfaces";
 
-export function useAuthentication(onAuthenticated: (result: IUserAuthenticationResult) => void) {
+export function useAuthentication(
+    onAuthenticated: (result: IUserAuthenticationResult) => void,
+    onError: (error: any) => void) {
+
+    const endPoint: string = `${BASE_API_URL}/User/authenticate`;
+
     async function authenticate(command: IAuthenticateUserCommand) {
         const abortController = new AbortController();
-        const signal = abortController.signal;
-
         try {
-            const response = await fetch(`${BASE_API_URL}/User/authenticate`, {
+            const response = await fetch(endPoint, {
                 method: 'POST',
                 headers: HEADERS,
                 body: JSON.stringify(command),
-                signal
+                signal: abortController.signal
             });
-            if (signal.aborted) {
-                throw new Error('Request was aborted');
+            if (!response.ok) {
+                const errorMessage: string = await response.text();
+                throw new Error(errorMessage);
             }
             const data = await response.json();
             onAuthenticated(data);
         } catch (error: any) {
-            //this.toaster.critical("error");
-            console.error(error);
+            onError(error);
         } finally {
             abortController.abort();
         }

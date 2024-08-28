@@ -11,6 +11,8 @@ import { CarRead } from './pages/Cars/crud/CarRead/CarRead';
 import { CarNew } from './pages/Cars/crud/CarNew/CarNew';
 import { InsuranceRead } from './pages/Insurances/crud/InsuranceRead/InsuranceRead';
 import { InsuranceNew } from './pages/Insurances/crud/InsuranceNew/InsuranceNew';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -33,6 +35,7 @@ function App() {
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }
